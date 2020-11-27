@@ -27,7 +27,12 @@ public class Player : MonoBehaviour
         AnyStateAnimation[] animations = new AnyStateAnimation[]
         {
             new AnyStateAnimation(RIG.BODY, "Idle"),
-            new AnyStateAnimation(RIG.BODY, "Run"),
+
+            new AnyStateAnimation(RIG.BODY, "MoveRight"),
+            new AnyStateAnimation(RIG.BODY, "MoveLeft"),
+            new AnyStateAnimation(RIG.BODY, "MoveUp"),
+            new AnyStateAnimation(RIG.BODY, "MoveDown"),
+
             new AnyStateAnimation(RIG.BODY, "Attack"),
         };
 
