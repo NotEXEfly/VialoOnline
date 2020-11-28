@@ -5,17 +5,20 @@ public class PlayerUtilities
 {
     private Player _player;
 
+    private Joystick _joystick;
+
     private List<Command> _commands = new List<Command>();
 
-    public PlayerUtilities(Player player)
+    public PlayerUtilities(Player player, Joystick joystick)
     {
         _player = player;
+        _joystick = joystick;
         _commands.Add(new AttackCommand(_player, KeyCode.E));
     }
 
     public void HandleInput()
     {
-        _player.Stats.Direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _player.Stats.Direction = _joystick.Direction;
 
         foreach (Command command in _commands)
         {

@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _actions = new PlayerActions(this);
-        _utilities = new PlayerUtilities(this);
+        _utilities = new PlayerUtilities(this, Components.Joystick);
 
         _components.GridMovePoint.parent = null;
 

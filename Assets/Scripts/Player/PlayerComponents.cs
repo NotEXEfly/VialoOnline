@@ -13,6 +13,9 @@ public class PlayerComponents
     private Collider2D _collider;
 
     [SerializeField]
+    private Joystick _joystick;
+
+    [SerializeField]
     private Transform _gridMovePoint;
 
     [SerializeField]
@@ -23,4 +26,5 @@ public class PlayerComponents
     public Collider2D Collider { get => _collider; }
     public Transform GridMovePoint { get => _gridMovePoint; }
     public LayerMask WhatStopMovement { get => _whatStopMovement; }
+    public Joystick Joystick { get => _joystick; }
 }
