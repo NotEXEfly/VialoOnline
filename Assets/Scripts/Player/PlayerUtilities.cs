@@ -19,6 +19,7 @@ public class PlayerUtilities
     public void HandleInput()
     {
         _player.Stats.Direction = _joystick.Direction;
+        //_player.Stats.Direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         foreach (Command command in _commands)
         {
