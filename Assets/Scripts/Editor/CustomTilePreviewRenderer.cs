@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEngine.Tilemaps;
+using System.Threading;
+
+//using System;
+//using System.Reflection;
+//using Object = UnityEngine.Object;
 
 [CustomEditor(typeof(EnvironmentTile))]
 public class CustomTilePreviewRenderer : UnityEditor.Editor
@@ -10,7 +15,14 @@ public class CustomTilePreviewRenderer : UnityEditor.Editor
         Tile tile = AssetDatabase.LoadAssetAtPath<Tile>(assetPath);
         if (tile.sprite != null)
         {
-            Texture2D spritePreview = AssetPreview.GetAssetPreview(tile.sprite); // Get sprite texture
+            Texture2D spritePreview = null;
+            spritePreview = AssetPreview.GetAssetPreview(tile);  // Get sprite texture;
+            while (spritePreview == null)
+            {
+                spritePreview = AssetPreview.GetAssetPreview(tile.sprite);
+                //Thread.Sleep(1);
+            }
+            if (spritePreview == null) return null;
 
             Color[] pixels = spritePreview.GetPixels();
             for (int i = 0; i < pixels.Length; i++)

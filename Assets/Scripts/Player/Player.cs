@@ -1,32 +1,27 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Character
 {
-    [SerializeField]
-    private PlayerStats _stats;
-    [SerializeField]
-    private PlayerComponents _components;
-    private PlayerReferences _references;
     private PlayerUtilities _utilities;
-    private PlayerActions _actions;
-
-    public PlayerComponents Components { get => _components;}
-    public PlayerStats Stats { get => _stats; }
-    public PlayerActions Actions { get => _actions;}
-    public PlayerUtilities Utilities { get => _utilities;}
+    [SerializeField]private Joystick _joystick;
+    public PlayerUtilities Utilities { get => _utilities; }
+    public Joystick Joystick { get => _joystick;}
 
     private void Start()
     {
-        _actions = new PlayerActions(this);
-        _utilities = new PlayerUtilities(this, Components.Joystick);
+        _actions = new CharacterActions(this);
+        _utilities = new PlayerUtilities(this, _joystick);
 
-        _components.GridMovePoint.parent = null;
-
-        _stats.Speed = _stats.RunSpeed;
+        _components.NextCellPoint.parent = null;
 
         AnyStateAnimation[] animations = new AnyStateAnimation[]
-        {
-            new AnyStateAnimation(RIG.BODY, "Idle"),
+{
+            new AnyStateAnimation(RIG.BODY, "IdleRight"),
+            new AnyStateAnimation(RIG.BODY, "IdleLeft"),
+            new AnyStateAnimation(RIG.BODY, "IdleUp"),
+            new AnyStateAnimation(RIG.BODY, "IdleDown"),
 
             new AnyStateAnimation(RIG.BODY, "MoveRight"),
             new AnyStateAnimation(RIG.BODY, "MoveLeft"),
@@ -34,18 +29,13 @@ public class Player : MonoBehaviour
             new AnyStateAnimation(RIG.BODY, "MoveDown"),
 
             new AnyStateAnimation(RIG.BODY, "Attack"),
-        };
-
+};
         _components.Animator.AddAnimations(animations);
     }
+
 
     private void Update()
     {
         _utilities.HandleInput();
-    }
-
-    private void FixedUpdate()
-    {
-        _actions.Move(transform);
     }
 }
