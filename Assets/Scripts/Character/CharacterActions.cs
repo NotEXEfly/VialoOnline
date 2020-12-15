@@ -3,10 +3,15 @@
 public class CharacterActions
 {
     private Character _character;
+    private PathFinder _pathFinder;
+    private float _waitBtwStepsTimer;
+
+    public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
 
     public CharacterActions(Character character)
     {
         _character = character;
+        _pathFinder = new PathFinder(_character.Components.NextCellPoint.position);
     }
 
     public void Move()
@@ -26,43 +31,62 @@ public class CharacterActions
             PlayIdleAnimations(_character.Stats.ViewDirection);
         }
 
-
-        SetNextCell();
-    }
-
-
-
-    public void Attack()
-    {
-       // _character.Components.Animator.TryPlayAnimation("Attack");
-    }
-
-
-
-    protected virtual void SetNextCell()
-    {
-        // Move GridMovePoint on next cell
-        // .05f fix micro freezes every cell
-        if (Vector2.Distance(_character.Components.RigitBody.position, _character.Components.NextCellPoint.position) <= .05f)
+        // Wait time between steps
+        if (ReadyToMove() && _pathFinder.CurrentPath.Count != 0)
         {
-            //fix animation transition
-            _character.Components.RigitBody.position = new Vector2(_character.Components.NextCellPoint.position.x, _character.Components.NextCellPoint.position.y);
+            _waitBtwStepsTimer += Time.deltaTime;
+            if ((_character.Stats.WaitBtwSteps >= 0f) && (_character.Stats.WaitBtwSteps <= _waitBtwStepsTimer))
+            {
+                _character.Components.NextCellPoint.position = _pathFinder.GetNextPoint();
+                _waitBtwStepsTimer = 0f;
+            }
+        }
 
+        Cross();
+
+
+    }
+
+    private void Cross()
+    {
+        // cross input
+        if (ReadyToMove())
+        {
             if (Mathf.Abs(_character.Stats.Direction.x) >= 1f)
             {
                 if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.Direction.x, 0f, 0f), .2f, _character.Components.WhatStopMovement))
                 {
-                    _character.Components.NextCellPoint.position += new Vector3(_character.Stats.Direction.x, 0f, 0f);
+                    _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.Direction.x, 0f));
+                    //_character.Components.NextCellPoint.position += new Vector3(_character.Stats.Direction.x, 0f, 0f);
                 }
             }
             else if (Mathf.Abs(_character.Stats.Direction.y) >= 1f)
             {
                 if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(0f, _character.Stats.Direction.y, 0f), .2f, _character.Components.WhatStopMovement))
                 {
-                    _character.Components.NextCellPoint.position += new Vector3(0f, _character.Stats.Direction.y, 0f);
+                    _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(0, _character.Stats.Direction.y));
+                    //_character.Components.NextCellPoint.position += new Vector3(0f, _character.Stats.Direction.y, 0f);
                 }
             }
         }
+    }
+
+
+    public void Attack()
+    {
+        // _character.Components.Animator.TryPlayAnimation("Attack");
+    }
+
+
+    public bool ReadyToMove()
+    {
+        if (Vector2.Distance(_character.Components.RigitBody.position, _character.Components.NextCellPoint.position) <= .05f)
+        {
+            //fix animation transition
+            _character.Components.RigitBody.position = new Vector2(_character.Components.NextCellPoint.position.x, _character.Components.NextCellPoint.position.y);
+            return true;
+        }
+        else return false;
     }
 
 
@@ -92,7 +116,7 @@ public class CharacterActions
             _character.Components.Animator.TryPlayAnimation("MoveDown");
             _character.Stats.ViewDirection = ViewDirection.DOWN;
         }
-            
+
     }
 
     void PlayIdleAnimations(ViewDirection lastViewDirection)

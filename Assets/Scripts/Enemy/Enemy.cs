@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Character
+public class Enemy : Character
 {
-    private PlayerUtilities _utilities;
-    [SerializeField]private Joystick _joystick;
-    public PlayerUtilities Utilities { get => _utilities; }
-    public Joystick Joystick { get => _joystick;}
-
     private void Start()
     {
         _actions = new CharacterActions(this);
-        _utilities = new PlayerUtilities(this, _joystick);
+
         _components.NextCellPoint.parent = null;
 
         AnyStateAnimation[] animations = new AnyStateAnimation[]
@@ -30,11 +25,26 @@ public class Player : Character
             new AnyStateAnimation(RIG.BODY, "Attack"),
         };
         _components.Animator.AddAnimations(animations);
+
+        CreatePath(_actions.PathFinder);
     }
 
-
-    private void Update()
+    private void CreatePath(PathFinder pf)
     {
-        _utilities.HandleInput();
+        pf.CurrentPath.Enqueue(new Vector2(8, 0));
+        pf.CurrentPath.Enqueue(new Vector2(9, 0));
+        pf.CurrentPath.Enqueue(new Vector2(10, 0));
+
+        pf.CurrentPath.Enqueue(new Vector2(10, -1));
+        pf.CurrentPath.Enqueue(new Vector2(10, -2));
+        pf.CurrentPath.Enqueue(new Vector2(10, -3));
+
+        pf.CurrentPath.Enqueue(new Vector2(9, -3));
+        pf.CurrentPath.Enqueue(new Vector2(8, -3));
+        pf.CurrentPath.Enqueue(new Vector2(7, -3));
+
+        pf.CurrentPath.Enqueue(new Vector2(7, -2));
+        pf.CurrentPath.Enqueue(new Vector2(7, -1));
+        pf.CurrentPath.Enqueue(new Vector2(7, 0));
     }
 }
