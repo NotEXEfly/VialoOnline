@@ -2,26 +2,27 @@
 
 public class CharacterActions
 {
-    private Character _character;
-    private PathFinder _pathFinder;
-    private float _waitBtwStepsTimer;
+    protected Character _character;
+    protected GridMovement _gridMovement;
+    
+    protected CellMovement _cellMovement;
 
-    public PathFinder PathFinder { get => _pathFinder; set => _pathFinder = value; }
+    public GridMovement GridMovement { get => _gridMovement; set => _gridMovement = value; }
 
     public CharacterActions(Character character)
     {
         _character = character;
-        _pathFinder = new PathFinder(_character.Components.NextCellPoint.position);
+        _gridMovement = new GridMovement(_character.Components.NextCellPoint.position, _character.Components.SolidTilemap);
+        _cellMovement = new CellMovement(_character.Components.RigitBody, _character.Components.NextCellPoint, _character.Stats.Speed);
     }
 
     public void Move()
     {
-        if (Vector2.Distance(_character.Components.RigitBody.position, _character.Components.NextCellPoint.position) != 0)
+        _cellMovement.MoveToNextCell();
+
+        //animations
+        if (_cellMovement.IsMoves)
         {
-            Vector2 newPosition = Vector2.MoveTowards(_character.Components.RigitBody.position, _character.Components.NextCellPoint.position, _character.Stats.Speed * Time.deltaTime);
-            _character.Components.RigitBody.MovePosition(newPosition);
-
-
             Vector2 targetMovePos = new Vector2(_character.Components.NextCellPoint.position.x, _character.Components.NextCellPoint.position.y);
             Vector2 playerRBPos = new Vector2(_character.Components.RigitBody.position.x, _character.Components.RigitBody.position.y);
             PlayMoveAnimations(targetMovePos, playerRBPos);
@@ -31,45 +32,46 @@ public class CharacterActions
             PlayIdleAnimations(_character.Stats.ViewDirection);
         }
 
-        // Wait time between steps
-        if (ReadyToMove() && _pathFinder.CurrentPath.Count != 0)
+
+
+        if (_cellMovement.IsReadyMove)
+            SetNextCell();
+
+        if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
         {
-            _waitBtwStepsTimer += Time.deltaTime;
-            if ((_character.Stats.WaitBtwSteps >= 0f) && (_character.Stats.WaitBtwSteps <= _waitBtwStepsTimer))
-            {
-                _character.Components.NextCellPoint.position = _pathFinder.GetNextPoint();
-                _waitBtwStepsTimer = 0f;
-            }
+            GoToNextCell();
         }
 
-        Cross();
+
+
 
 
     }
 
-    private void Cross()
-    {
-        // cross input
-        if (ReadyToMove())
-        {
-            if (Mathf.Abs(_character.Stats.Direction.x) >= 1f)
-            {
-                if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.Direction.x, 0f, 0f), .2f, _character.Components.WhatStopMovement))
-                {
-                    _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.Direction.x, 0f));
-                    //_character.Components.NextCellPoint.position += new Vector3(_character.Stats.Direction.x, 0f, 0f);
-                }
-            }
-            else if (Mathf.Abs(_character.Stats.Direction.y) >= 1f)
-            {
-                if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(0f, _character.Stats.Direction.y, 0f), .2f, _character.Components.WhatStopMovement))
-                {
-                    _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(0, _character.Stats.Direction.y));
-                    //_character.Components.NextCellPoint.position += new Vector3(0f, _character.Stats.Direction.y, 0f);
-                }
-            }
-        }
-    }
+    public virtual void GoToNextCell() { }
+    public virtual void SetNextCell() { }
+
+    //private void Cross()
+    //{
+    //    // cross input 
+    //    if (ReadyToMove())
+    //    {
+    //        if (Mathf.Abs(_character.Stats.InputDirection.x) >= 1f)
+    //        {
+    //            if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.InputDirection.x, 0f, 0f), .2f, _character.Components.WhatStopMovement))
+    //            {
+    //                _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.InputDirection.x, 0f));
+    //            }
+    //        }
+    //        else if (Mathf.Abs(_character.Stats.InputDirection.y) >= 1f)
+    //        {
+    //            if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(0f, _character.Stats.InputDirection.y, 0f), .2f, _character.Components.WhatStopMovement))
+    //            {
+    //                _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(0, _character.Stats.InputDirection.y));
+    //            }
+    //        }
+    //    }
+    //}
 
 
     public void Attack()
@@ -78,17 +80,10 @@ public class CharacterActions
     }
 
 
-    public bool ReadyToMove()
-    {
-        if (Vector2.Distance(_character.Components.RigitBody.position, _character.Components.NextCellPoint.position) <= .05f)
-        {
-            //fix animation transition
-            _character.Components.RigitBody.position = new Vector2(_character.Components.NextCellPoint.position.x, _character.Components.NextCellPoint.position.y);
-            return true;
-        }
-        else return false;
-    }
+    
 
+
+    
 
     // ------------------------ ANIMATIONS -----------------------------
     void PlayMoveAnimations(Vector2 targetMovePos, Vector2 playerRBPos)
@@ -96,43 +91,43 @@ public class CharacterActions
         if (targetMovePos.x > playerRBPos.x)
         {
             _character.Components.Animator.TryPlayAnimation("MoveRight");
-            _character.Stats.ViewDirection = ViewDirection.RIGHT;
+            _character.Stats.ViewDirection = Direction.RIGHT;
         }
 
         else if (targetMovePos.x < playerRBPos.x)
         {
             _character.Components.Animator.TryPlayAnimation("MoveLeft");
-            _character.Stats.ViewDirection = ViewDirection.LEFT;
+            _character.Stats.ViewDirection = Direction.LEFT;
         }
 
         if (targetMovePos.y > playerRBPos.y)
         {
             _character.Components.Animator.TryPlayAnimation("MoveUp");
-            _character.Stats.ViewDirection = ViewDirection.UP;
+            _character.Stats.ViewDirection = Direction.UP;
         }
 
         else if (targetMovePos.y < playerRBPos.y)
         {
             _character.Components.Animator.TryPlayAnimation("MoveDown");
-            _character.Stats.ViewDirection = ViewDirection.DOWN;
+            _character.Stats.ViewDirection = Direction.DOWN;
         }
 
     }
 
-    void PlayIdleAnimations(ViewDirection lastViewDirection)
+    void PlayIdleAnimations(Direction lastViewDirection)
     {
         switch (lastViewDirection)
         {
-            case ViewDirection.RIGHT:
+            case Direction.RIGHT:
                 _character.Components.Animator.TryPlayAnimation("IdleRight");
                 break;
-            case ViewDirection.LEFT:
+            case Direction.LEFT:
                 _character.Components.Animator.TryPlayAnimation("IdleLeft");
                 break;
-            case ViewDirection.UP:
+            case Direction.UP:
                 _character.Components.Animator.TryPlayAnimation("IdleUp");
                 break;
-            case ViewDirection.DOWN:
+            case Direction.DOWN:
                 _character.Components.Animator.TryPlayAnimation("IdleDown");
                 break;
             default:

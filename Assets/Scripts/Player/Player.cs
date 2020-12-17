@@ -1,18 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : Character
 {
+    [SerializeField] private Joystick _joystick;
+
     private PlayerUtilities _utilities;
-    [SerializeField]private Joystick _joystick;
     public PlayerUtilities Utilities { get => _utilities; }
-    public Joystick Joystick { get => _joystick;}
+    
 
     private void Start()
     {
-        _actions = new CharacterActions(this);
         _utilities = new PlayerUtilities(this, _joystick);
+        _actions = new PlayerActions(this);
         _components.NextCellPoint.parent = null;
 
         AnyStateAnimation[] animations = new AnyStateAnimation[]
@@ -31,7 +31,6 @@ public class Player : Character
         };
         _components.Animator.AddAnimations(animations);
     }
-
 
     private void Update()
     {

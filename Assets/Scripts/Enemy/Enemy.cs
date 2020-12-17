@@ -6,7 +6,7 @@ public class Enemy : Character
 {
     private void Start()
     {
-        _actions = new CharacterActions(this);
+        _actions = new EnemyActions(this);
 
         _components.NextCellPoint.parent = null;
 
@@ -26,25 +26,27 @@ public class Enemy : Character
         };
         _components.Animator.AddAnimations(animations);
 
-        CreatePath(_actions.PathFinder);
+        CreatePath(_actions.GridMovement);
+
+        StartCoroutine(_actions.GridMovement.SetNextPointWithDelay(Stats.WaitBtwSteps));
     }
 
-    private void CreatePath(PathFinder pf)
+    private void CreatePath(GridMovement gm)
     {
-        pf.CurrentPath.Enqueue(new Vector2(8, 0));
-        pf.CurrentPath.Enqueue(new Vector2(9, 0));
-        pf.CurrentPath.Enqueue(new Vector2(10, 0));
+        gm.CurrentPath.Enqueue(new Vector2(8, 0));
+        gm.CurrentPath.Enqueue(new Vector2(9, 0));
+        gm.CurrentPath.Enqueue(new Vector2(10, 0));
 
-        pf.CurrentPath.Enqueue(new Vector2(10, -1));
-        pf.CurrentPath.Enqueue(new Vector2(10, -2));
-        pf.CurrentPath.Enqueue(new Vector2(10, -3));
+        gm.CurrentPath.Enqueue(new Vector2(10, -1));
+        gm.CurrentPath.Enqueue(new Vector2(10, -2));
+        gm.CurrentPath.Enqueue(new Vector2(10, -3));
 
-        pf.CurrentPath.Enqueue(new Vector2(9, -3));
-        pf.CurrentPath.Enqueue(new Vector2(8, -3));
-        pf.CurrentPath.Enqueue(new Vector2(7, -3));
+        gm.CurrentPath.Enqueue(new Vector2(9, -3));
+        gm.CurrentPath.Enqueue(new Vector2(8, -3));
+        gm.CurrentPath.Enqueue(new Vector2(7, -3));
 
-        pf.CurrentPath.Enqueue(new Vector2(7, -2));
-        pf.CurrentPath.Enqueue(new Vector2(7, -1));
-        pf.CurrentPath.Enqueue(new Vector2(7, 0));
+        gm.CurrentPath.Enqueue(new Vector2(7, -2));
+        gm.CurrentPath.Enqueue(new Vector2(7, -1));
+        gm.CurrentPath.Enqueue(new Vector2(7, 0));
     }
 }

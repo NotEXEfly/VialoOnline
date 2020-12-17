@@ -7645,6 +7645,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 797578795568354983, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8526454883848697922, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
       propertyPath: _stats._waitBtwSteps
       value: 0.5
@@ -7808,6 +7812,10 @@ PrefabInstance:
       propertyPath: _joystick
       value: 
       objectReference: {fileID: 10466020}
+    - target: {fileID: 9026792804137791003, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}
+      propertyPath: _components._solidTilemap
+      value: 
+      objectReference: {fileID: 647602603}
     - target: {fileID: 9026792804137791007, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}
       propertyPath: m_Name
       value: Player

@@ -8,18 +8,15 @@ public class CharacterStats
     public float Speed { get => _speed; }
     public float WaitBtwSteps { get => _waitBtwSteps; }
 
-    public Vector2 Direction { get; set; }
-    public ViewDirection ViewDirection { get; set; } = ViewDirection.DOWN;
-
-    
-    
+    public Direction ViewDirection { get; set; } = Direction.DOWN;
 }
 
 
-public enum ViewDirection
+public enum Direction
 {
     RIGHT,
     LEFT,
     UP,
-    DOWN
+    DOWN,
+    NONE
 }
