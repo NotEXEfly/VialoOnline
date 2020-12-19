@@ -8,12 +8,14 @@ public class GridMovement
     public Queue<Vector2> CurrentPath { get; private set; }
 
     private Tilemap _solidTilemap;
+    private Queue<Vector2> _helpQueue;
 
     public GridMovement(Vector2 currentPoint, Tilemap solidTilemap)
     {
         _solidTilemap = solidTilemap;
         CurrentPath = new Queue<Vector2>();
         CurrentPath.Enqueue(currentPoint);
+        _helpQueue = new Queue<Vector2>();
     }
 
     public Vector2 GetNextPoint()
