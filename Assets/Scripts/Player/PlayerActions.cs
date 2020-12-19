@@ -5,24 +5,35 @@ using UnityEngine;
 public class PlayerActions : CharacterActions
 {
     private Player _player;
+    private PlayerGridMovement _gridMovement;
+
     public PlayerActions(Player player) : base (player) 
     {
         _player = player;
+        _gridMovement = new PlayerGridMovement(_player.Components.NextCellPoint.position, _player.Components.SolidTilemap);
     }
 
-    public override void GoToNextCell()
+    public override void Move()
     {
-        _character.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
-        
-    }
+        //btw cell movemet
+        base.Move();
 
-    public override void SetNextCell()
-    {
-        if (_player.Utilities.InputDirection != Direction.NONE)
+
+        if (_cellMovement.IsReadyMove)
         {
-            _gridMovement.SetNextPoint(getInputNextPoint(_player.Utilities.InputDirection));
+            if (_player.Utilities.InputDirection != Direction.NONE)
+            {
+                _gridMovement.SetNextPoint(getInputNextPoint(_player.Utilities.InputDirection));
+            }
         }
+
+        if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
+        {
+            _player.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
+        }
+
     }
+
 
 
     private Vector2 getInputNextPoint(Direction direction)

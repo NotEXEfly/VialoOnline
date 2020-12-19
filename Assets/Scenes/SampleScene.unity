@@ -5142,6 +5142,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &220957318
 Canvas:
   m_ObjectHideFlags: 0
@@ -6778,6 +6779,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &694294396
 Canvas:
   m_ObjectHideFlags: 0
@@ -7647,12 +7649,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 797578795568354983, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8526454883848697922, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
       propertyPath: _stats._waitBtwSteps
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8526454883848697922, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
+      propertyPath: _components._solidTilemap
+      value: 
+      objectReference: {fileID: 647602603}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
 --- !u!1 &2125496201
@@ -7732,6 +7738,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &2125496205
 Canvas:
   m_ObjectHideFlags: 0

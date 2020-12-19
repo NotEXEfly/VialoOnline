@@ -26,12 +26,9 @@ public class Enemy : Character
         };
         _components.Animator.AddAnimations(animations);
 
-        CreatePath(_actions.GridMovement);
-
-        StartCoroutine(_actions.GridMovement.SetNextPointWithDelay(Stats.WaitBtwSteps));
     }
 
-    private void CreatePath(GridMovement gm)
+    private void CreatePath(BaseGridMovement gm)
     {
         gm.CurrentPath.Enqueue(new Vector2(8, 0));
         gm.CurrentPath.Enqueue(new Vector2(9, 0));

@@ -2,21 +2,16 @@
 
 public class CharacterActions
 {
-    protected Character _character;
-    protected GridMovement _gridMovement;
-    
+    private Character _character;
     protected CellMovement _cellMovement;
-
-    public GridMovement GridMovement { get => _gridMovement; set => _gridMovement = value; }
 
     public CharacterActions(Character character)
     {
         _character = character;
-        _gridMovement = new GridMovement(_character.Components.NextCellPoint.position, _character.Components.SolidTilemap);
         _cellMovement = new CellMovement(_character.Components.RigitBody, _character.Components.NextCellPoint, _character.Stats.Speed);
     }
 
-    public void Move()
+    public virtual void Move()
     {
         _cellMovement.MoveToNextCell();
 
@@ -31,59 +26,13 @@ public class CharacterActions
         {
             PlayIdleAnimations(_character.Stats.ViewDirection);
         }
-
-
-
-        if (_cellMovement.IsReadyMove)
-            SetNextCell();
-
-        if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
-        {
-            GoToNextCell();
-        }
-
-
-
-
-
     }
-
-    public virtual void GoToNextCell() { }
-    public virtual void SetNextCell() { }
-
-    //private void Cross()
-    //{
-    //    // cross input 
-    //    if (ReadyToMove())
-    //    {
-    //        if (Mathf.Abs(_character.Stats.InputDirection.x) >= 1f)
-    //        {
-    //            if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.InputDirection.x, 0f, 0f), .2f, _character.Components.WhatStopMovement))
-    //            {
-    //                _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(_character.Stats.InputDirection.x, 0f));
-    //            }
-    //        }
-    //        else if (Mathf.Abs(_character.Stats.InputDirection.y) >= 1f)
-    //        {
-    //            if (!Physics2D.OverlapCircle(_character.Components.NextCellPoint.position + new Vector3(0f, _character.Stats.InputDirection.y, 0f), .2f, _character.Components.WhatStopMovement))
-    //            {
-    //                _pathFinder.SetNextPoint(_character.Components.NextCellPoint.position + new Vector3(0, _character.Stats.InputDirection.y));
-    //            }
-    //        }
-    //    }
-    //}
-
 
     public void Attack()
     {
         // _character.Components.Animator.TryPlayAnimation("Attack");
     }
 
-
-    
-
-
-    
 
     // ------------------------ ANIMATIONS -----------------------------
     void PlayMoveAnimations(Vector2 targetMovePos, Vector2 playerRBPos)
