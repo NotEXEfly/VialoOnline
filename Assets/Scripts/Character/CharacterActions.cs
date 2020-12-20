@@ -33,9 +33,25 @@ public class CharacterActions
         // _character.Components.Animator.TryPlayAnimation("Attack");
     }
 
+    protected Vector2 GetPointFromDirection(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.RIGHT:
+                return _character.Components.NextCellPoint.position + Vector3.right;
+            case Direction.LEFT:
+                return _character.Components.NextCellPoint.position + Vector3.left;
+            case Direction.UP:
+                return _character.Components.NextCellPoint.position + Vector3.up;
+            case Direction.DOWN:
+                return _character.Components.NextCellPoint.position + Vector3.down;
+            default:
+                return _character.Components.NextCellPoint.position;
 
+        }
+    }
     // ------------------------ ANIMATIONS -----------------------------
-    void PlayMoveAnimations(Vector2 targetMovePos, Vector2 playerRBPos)
+    private void PlayMoveAnimations(Vector2 targetMovePos, Vector2 playerRBPos)
     {
         if (targetMovePos.x > playerRBPos.x)
         {
@@ -63,7 +79,7 @@ public class CharacterActions
 
     }
 
-    void PlayIdleAnimations(Direction lastViewDirection)
+    protected void PlayIdleAnimations(Direction lastViewDirection)
     {
         switch (lastViewDirection)
         {

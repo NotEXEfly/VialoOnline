@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyActions : CharacterActions
 {
@@ -8,6 +6,7 @@ public class EnemyActions : CharacterActions
     private float _waitBtwStepsTimer;
     private EnemyGridMovement _gridMovement;
     public EnemyGridMovement GridMovement { get => _gridMovement; }
+    private System.Random _rnd = new System.Random();
 
     public EnemyActions(Enemy enemy) : base (enemy)
     {
@@ -22,11 +21,18 @@ public class EnemyActions : CharacterActions
         //btw cell movemet
         base.Move();
 
+        // grid movement
+        if (_cellMovement.IsReadyMove)
+        {
+            _gridMovement.SetNextPoint(GetPointFromDirection((Direction)_rnd.Next(0, 4)));
+        }
 
         if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
         {
+            //_enemy.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
+
             _waitBtwStepsTimer += Time.deltaTime;
-            if ((_enemy.Stats.WaitBtwSteps >= 0f) && (_enemy.Stats.WaitBtwSteps <= _waitBtwStepsTimer))
+            if ((_enemy.WaitBtwSteps >= 0f) && (_enemy.WaitBtwSteps <= _waitBtwStepsTimer))
             {
                 _enemy.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
                 _waitBtwStepsTimer = 0f;

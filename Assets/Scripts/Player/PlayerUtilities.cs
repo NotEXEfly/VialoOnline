@@ -18,8 +18,11 @@ public class PlayerUtilities
 
     public void HandleInput()
     {
-        //_player.Stats.Direction = _joystick.Direction;
+#if UNITY_EDITOR
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+#else
+        _input = _joystick.Direction;
+#endif
 
         SetInputDirection(_input);
     }

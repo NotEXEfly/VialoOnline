@@ -6,6 +6,7 @@ public class PlayerActions : CharacterActions
 {
     private Player _player;
     private PlayerGridMovement _gridMovement;
+    private Direction _lastViewDirection = Direction.DOWN;
 
     public PlayerActions(Player player) : base (player) 
     {
@@ -18,12 +19,19 @@ public class PlayerActions : CharacterActions
         //btw cell movemet
         base.Move();
 
+        // idle animation direction on stay
+        if (_player.Utilities.InputDirection != Direction.NONE)
+            _lastViewDirection = _player.Utilities.InputDirection;
 
+        if (!_cellMovement.IsMoves)
+            PlayIdleAnimations(_lastViewDirection);
+
+        // grid movement
         if (_cellMovement.IsReadyMove)
         {
             if (_player.Utilities.InputDirection != Direction.NONE)
             {
-                _gridMovement.SetNextPoint(getInputNextPoint(_player.Utilities.InputDirection));
+                _gridMovement.SetNextPoint(GetPointFromDirection(_player.Utilities.InputDirection));
             }
         }
 
@@ -35,23 +43,5 @@ public class PlayerActions : CharacterActions
     }
 
 
-
-    private Vector2 getInputNextPoint(Direction direction)
-    {
-        switch (direction)
-        {
-            case Direction.RIGHT:
-                return _player.Components.NextCellPoint.position + Vector3.right;
-            case Direction.LEFT:
-                return _player.Components.NextCellPoint.position + Vector3.left;
-            case Direction.UP:
-                return _player.Components.NextCellPoint.position + Vector3.up;
-            case Direction.DOWN:
-                return _player.Components.NextCellPoint.position + Vector3.down;
-            default:
-                return _player.Components.NextCellPoint.position;
-
-        }
-    }
 
 }

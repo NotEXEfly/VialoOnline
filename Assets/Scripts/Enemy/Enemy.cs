@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Enemy : Character
 {
+    [Range(0, 3)]
+    [SerializeField] private float _waitBtwSteps = 1;
+    public float WaitBtwSteps { get => _waitBtwSteps; }
+
     private void Start()
     {
         _actions = new EnemyActions(this);
@@ -28,22 +32,4 @@ public class Enemy : Character
 
     }
 
-    private void CreatePath(BaseGridMovement gm)
-    {
-        gm.CurrentPath.Enqueue(new Vector2(8, 0));
-        gm.CurrentPath.Enqueue(new Vector2(9, 0));
-        gm.CurrentPath.Enqueue(new Vector2(10, 0));
-
-        gm.CurrentPath.Enqueue(new Vector2(10, -1));
-        gm.CurrentPath.Enqueue(new Vector2(10, -2));
-        gm.CurrentPath.Enqueue(new Vector2(10, -3));
-
-        gm.CurrentPath.Enqueue(new Vector2(9, -3));
-        gm.CurrentPath.Enqueue(new Vector2(8, -3));
-        gm.CurrentPath.Enqueue(new Vector2(7, -3));
-
-        gm.CurrentPath.Enqueue(new Vector2(7, -2));
-        gm.CurrentPath.Enqueue(new Vector2(7, -1));
-        gm.CurrentPath.Enqueue(new Vector2(7, 0));
-    }
 }
