@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class EnemyGridMovement : BaseGridMovement
 {
-    public EnemyGridMovement(Vector2 currentPoint, Tilemap solidTilemap) : base(currentPoint, solidTilemap)
+    public EnemyGridMovement(Transform characterCellPoint, List<Tilemap> obstacleTilemaps) : base(characterCellPoint, obstacleTilemaps)
     {
         //CreateStaticPath();
     }

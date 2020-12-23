@@ -6,12 +6,14 @@ public class EnemyActions : CharacterActions
     private float _waitBtwStepsTimer;
     private EnemyGridMovement _gridMovement;
     public EnemyGridMovement GridMovement { get => _gridMovement; }
+
     private System.Random _rnd = new System.Random();
+    private Direction _lastDirection;
 
     public EnemyActions(Enemy enemy) : base (enemy)
     {
         _enemy = enemy;
-       _gridMovement = new EnemyGridMovement(enemy.Components.NextCellPoint.position, enemy.Components.SolidTilemap);
+       _gridMovement = new EnemyGridMovement(enemy.Components.NextCellPoint, enemy.Components.ObstacleTilemaps);
     }
 
     
@@ -24,7 +26,11 @@ public class EnemyActions : CharacterActions
         // grid movement
         if (_cellMovement.IsReadyMove)
         {
-            _gridMovement.SetNextPoint(GetPointFromDirection((Direction)_rnd.Next(0, 4)));
+            Direction randDirection = (Direction)_rnd.Next(0, 4);
+
+             _gridMovement.SetNextPoint(GetPointFromDirection(randDirection));
+
+            //_lastDirection = randDirection;
         }
 
         if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)

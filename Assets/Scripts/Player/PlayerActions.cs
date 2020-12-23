@@ -11,7 +11,7 @@ public class PlayerActions : CharacterActions
     public PlayerActions(Player player) : base (player) 
     {
         _player = player;
-        _gridMovement = new PlayerGridMovement(_player.Components.NextCellPoint.position, _player.Components.SolidTilemap);
+        _gridMovement = new PlayerGridMovement(_player.Components.NextCellPoint, _player.Components.ObstacleTilemaps);
     }
 
     public override void Move()
@@ -42,6 +42,11 @@ public class PlayerActions : CharacterActions
 
     }
 
-
+    public override void Attack()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
+        _gridMovement.SetNewPath(targetPos);
+    }
 
 }

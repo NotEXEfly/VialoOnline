@@ -143,8 +143,6 @@ MonoBehaviour:
   handleRange: 1
   deadZone: 0
   axisOptions: 0
-  snapX: 1
-  snapY: 1
   background: {fileID: 1875511237}
   handle: {fileID: 1710980791}
 --- !u!1 &108438817
@@ -7546,6 +7544,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1142480371}
   m_CullTransparentMesh: 1
+--- !u!1 &1222611382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222611384}
+  - component: {fileID: 1222611383}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1222611383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222611382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0544e635e5b4a0449b627f481a9079eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {x: 2, y: 0, z: 0}
+  targetPos: {x: 3, y: -2, z: 0}
+  obstacleTilemaps:
+  - {fileID: 647602603}
+--- !u!4 &1222611384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222611382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1710980791 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2929252285020697096, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
@@ -7956,6 +8001,14 @@ PrefabInstance:
       propertyPath: _components._solidTilemap
       value: 
       objectReference: {fileID: 647602603}
+    - target: {fileID: 8526454883848697922, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
+      propertyPath: _components._obstacleTilemaps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8526454883848697922, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
+      propertyPath: _components._obstacleTilemaps.Array.data[0]
+      value: 
+      objectReference: {fileID: 647602603}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdce4006c730cdc44a76b8a40a8c4fb3, type: 3}
 --- !u!1 &2125496201
@@ -8118,6 +8171,14 @@ PrefabInstance:
       objectReference: {fileID: 10466020}
     - target: {fileID: 9026792804137791003, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}
       propertyPath: _components._solidTilemap
+      value: 
+      objectReference: {fileID: 647602603}
+    - target: {fileID: 9026792804137791003, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}
+      propertyPath: _components._obstacleTilemaps.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9026792804137791003, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}
+      propertyPath: _components._obstacleTilemaps.Array.data[0]
       value: 
       objectReference: {fileID: 647602603}
     - target: {fileID: 9026792804137791007, guid: 6cead9327ae812646bafc54df6d30c67, type: 3}

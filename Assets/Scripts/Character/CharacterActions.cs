@@ -28,7 +28,7 @@ public class CharacterActions
         }
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         // _character.Components.Animator.TryPlayAnimation("Attack");
     }

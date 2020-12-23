@@ -10,21 +10,43 @@ public class PlayerUtilities
     public float AxisRawInput { get; set; }
     public Direction InputDirection { get; private set; } = Direction.NONE;
 
+    private List<Command> _commands = new List<Command>();
+
     public PlayerUtilities(Player player, Joystick joystick)
     {
         _player = player;
         _joystick = joystick;
+        _commands.Add(new AttackCommand(_player, KeyCode.Space));
     }
 
     public void HandleInput()
     {
+        // movement joystick
 #if UNITY_EDITOR
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 #else
         _input = _joystick.Direction;
 #endif
-
         SetInputDirection(_input);
+
+
+        foreach (Command command in _commands)
+        {
+            if (Input.GetKeyDown(command.Key))
+            {
+                command.GetKeyDown();
+            }
+
+            if (Input.GetKeyUp(command.Key))
+            {
+                command.GetKeyUp();
+            }
+
+            if (Input.GetKey(command.Key))
+            {
+                command.GetKey();
+            }
+        }
     }
 
     

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -5,7 +6,7 @@ public class PlayerGridMovement : BaseGridMovement
 {
     private int _lastViewTileHash;
 
-    public PlayerGridMovement(Vector2 currentPoint, Tilemap solidTilemap) : base (currentPoint, solidTilemap)
+    public PlayerGridMovement(Transform characterCellPoint, List<Tilemap> obstacleTilemaps) : base (characterCellPoint, obstacleTilemaps)
     {
 
     }
@@ -34,4 +35,5 @@ public class PlayerGridMovement : BaseGridMovement
             CurrentPath.Enqueue(targetPoint);
         }
     }
+
 }
