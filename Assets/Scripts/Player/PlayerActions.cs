@@ -6,12 +6,11 @@ public class PlayerActions : CharacterActions
 {
     private Player _player;
     private PlayerGridMovement _gridMovement;
-    private Direction _lastViewDirection = Direction.DOWN;
 
     public PlayerActions(Player player) : base (player) 
     {
         _player = player;
-        _gridMovement = new PlayerGridMovement(_player.Components.NextCellPoint, _player.Components.ObstacleTilemaps);
+        _gridMovement = new PlayerGridMovement(_player, _player.Components.ObstacleTilemaps);
     }
 
     public override void Move()
@@ -20,11 +19,8 @@ public class PlayerActions : CharacterActions
         base.Move();
 
         // idle animation direction on stay
-        if (_player.Utilities.InputDirection != Direction.NONE)
-            _lastViewDirection = _player.Utilities.InputDirection;
-
-        if (!_cellMovement.IsMoves)
-            PlayIdleAnimations(_lastViewDirection);
+        if (_cellMovement.IsReadyMove && _player.Utilities.InputDirection != Direction.NONE)
+            _player.Stats.ViewDirection = _player.Utilities.InputDirection;
 
         // grid movement
         if (_cellMovement.IsReadyMove)
@@ -47,6 +43,12 @@ public class PlayerActions : CharacterActions
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
         _gridMovement.SetNewPath(targetPos);
+    }
+
+    public override void MoveByPath(Vector2Int targetCell)
+    {
+
+         _gridMovement.SetNewPath(targetCell);
     }
 
 }

@@ -4,12 +4,12 @@ using UnityEngine.Tilemaps;
 
 public class EnemyGridMovement : BaseGridMovement
 {
-    public EnemyGridMovement(Transform characterCellPoint, List<Tilemap> obstacleTilemaps) : base(characterCellPoint, obstacleTilemaps)
+    public EnemyGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base(character, obstacleTilemaps)
     {
         //CreateStaticPath();
     }
 
-    public override void SetNextPoint(Vector2 targetPoint)
+    public override void SetNextPoint(Vector2Int targetPoint)
     {
         EnvironmentTile tile = GetSolidTile(targetPoint);
         if (tile == null)
@@ -21,20 +21,20 @@ public class EnemyGridMovement : BaseGridMovement
 
     public void CreateStaticPath()
     {
-        CurrentPath.Enqueue(new Vector2(8, 0));
-        CurrentPath.Enqueue(new Vector2(9, 0));
-        CurrentPath.Enqueue(new Vector2(10, 0));
+        CurrentPath.Enqueue(new Vector2Int(8, 0));
+        CurrentPath.Enqueue(new Vector2Int(9, 0));
+        CurrentPath.Enqueue(new Vector2Int(10, 0));
 
-        CurrentPath.Enqueue(new Vector2(10, -1));
-        CurrentPath.Enqueue(new Vector2(10, -2));
-        CurrentPath.Enqueue(new Vector2(10, -3));
+        CurrentPath.Enqueue(new Vector2Int(10, -1));
+        CurrentPath.Enqueue(new Vector2Int(10, -2));
+        CurrentPath.Enqueue(new Vector2Int(10, -3));
 
-        CurrentPath.Enqueue(new Vector2(9, -3));
-        CurrentPath.Enqueue(new Vector2(8, -3));
-        CurrentPath.Enqueue(new Vector2(7, -3));
+        CurrentPath.Enqueue(new Vector2Int(9, -3));
+        CurrentPath.Enqueue(new Vector2Int(8, -3));
+        CurrentPath.Enqueue(new Vector2Int(7, -3));
 
-        CurrentPath.Enqueue(new Vector2(7, -2));
-        CurrentPath.Enqueue(new Vector2(7, -1));
-        CurrentPath.Enqueue(new Vector2(7, 0));
+        CurrentPath.Enqueue(new Vector2Int(7, -2));
+        CurrentPath.Enqueue(new Vector2Int(7, -1));
+        CurrentPath.Enqueue(new Vector2Int(7, 0));
     }
 }

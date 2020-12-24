@@ -13,7 +13,7 @@ public class EnemyActions : CharacterActions
     public EnemyActions(Enemy enemy) : base (enemy)
     {
         _enemy = enemy;
-       _gridMovement = new EnemyGridMovement(enemy.Components.NextCellPoint, enemy.Components.ObstacleTilemaps);
+       _gridMovement = new EnemyGridMovement(_enemy, _enemy.Components.ObstacleTilemaps);
     }
 
     

@@ -33,20 +33,22 @@ public class CharacterActions
         // _character.Components.Animator.TryPlayAnimation("Attack");
     }
 
-    protected Vector2 GetPointFromDirection(Direction direction)
+    public virtual void MoveByPath(Vector2Int targetCell) { }
+
+    protected Vector2Int GetPointFromDirection(Direction direction)
     {
         switch (direction)
         {
             case Direction.RIGHT:
-                return _character.Components.NextCellPoint.position + Vector3.right;
+                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.right);
             case Direction.LEFT:
-                return _character.Components.NextCellPoint.position + Vector3.left;
+                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.left);
             case Direction.UP:
-                return _character.Components.NextCellPoint.position + Vector3.up;
+                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.up);
             case Direction.DOWN:
-                return _character.Components.NextCellPoint.position + Vector3.down;
+                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.down);
             default:
-                return _character.Components.NextCellPoint.position;
+                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position);
 
         }
     }

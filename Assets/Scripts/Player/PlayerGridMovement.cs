@@ -6,12 +6,12 @@ public class PlayerGridMovement : BaseGridMovement
 {
     private int _lastViewTileHash;
 
-    public PlayerGridMovement(Transform characterCellPoint, List<Tilemap> obstacleTilemaps) : base (characterCellPoint, obstacleTilemaps)
+    public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps)
     {
 
     }
 
-    public override void SetNextPoint(Vector2 targetPoint)
+    public override void SetNextPoint(Vector2Int targetPoint)
     {
         EnvironmentTile tile = GetSolidTile(targetPoint);
 

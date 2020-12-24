@@ -16,7 +16,8 @@ public class PlayerUtilities
     {
         _player = player;
         _joystick = joystick;
-        _commands.Add(new AttackCommand(_player, KeyCode.Space));
+        _commands.Add(new AttackCommand(_player, KeyCode.Mouse1));
+        _commands.Add(new MoveCommand(_player, KeyCode.Mouse0));
     }
 
     public void HandleInput()
@@ -47,9 +48,11 @@ public class PlayerUtilities
                 command.GetKey();
             }
         }
+
+        //DetectSwipe();
     }
 
-    
+
     private void SetInputDirection(Vector2 input)
     {
         if (input == Vector2.zero)
