@@ -46,7 +46,7 @@ public abstract class BaseGridMovement
         CurrentPath.Clear();
         path = null;
 
-        var playerRoundPoint = new Vector2Int(Mathf.RoundToInt(_character.Components.NextCellPoint.position.x), Mathf.RoundToInt(_character.Components.NextCellPoint.position.y));
+        var playerRoundPoint = new Vector2Int(Mathf.RoundToInt(_character.Components.RealPosition.position.x), Mathf.RoundToInt(_character.Components.RealPosition.position.y));
 
         _pathFinder.Set(_grid, playerRoundPoint.x, playerRoundPoint.y, targetCellPoint.x, targetCellPoint.y);
         path = _pathFinder.Seek();

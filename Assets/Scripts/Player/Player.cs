@@ -12,7 +12,7 @@ public class Player : Character
     {
         _utilities = new PlayerUtilities(this, _joystick);
         _actions = new PlayerActions(this);
-        _components.NextCellPoint.parent = null;
+        _components.RealPosition.parent = null;
 
         AnyStateAnimation[] animations = new AnyStateAnimation[]
         {

@@ -33,7 +33,7 @@ public class PlayerActions : CharacterActions
 
         if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
         {
-            _player.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
+            _player.Components.RealPosition.position = _gridMovement.GetNextPoint();
         }
 
     }
@@ -47,7 +47,7 @@ public class PlayerActions : CharacterActions
 
     public override void MoveByPath(Vector2Int targetCell)
     {
-
+        
          _gridMovement.SetNewPath(targetCell);
     }
 

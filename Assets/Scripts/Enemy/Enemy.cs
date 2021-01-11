@@ -12,7 +12,7 @@ public class Enemy : Character
     {
         _actions = new EnemyActions(this);
 
-        _components.NextCellPoint.parent = null;
+        _components.RealPosition.parent = null;
 
         AnyStateAnimation[] animations = new AnyStateAnimation[]
         {

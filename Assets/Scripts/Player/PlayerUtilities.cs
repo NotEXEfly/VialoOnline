@@ -7,17 +7,12 @@ public class PlayerUtilities
     private Joystick _joystick;
     private Vector2 _input;
 
-    public float AxisRawInput { get; set; }
     public Direction InputDirection { get; private set; } = Direction.NONE;
-
-    private List<Command> _commands = new List<Command>();
 
     public PlayerUtilities(Player player, Joystick joystick)
     {
         _player = player;
         _joystick = joystick;
-        _commands.Add(new AttackCommand(_player, KeyCode.Mouse1));
-        _commands.Add(new MoveCommand(_player, KeyCode.Mouse0));
     }
 
     public void HandleInput()
@@ -30,26 +25,21 @@ public class PlayerUtilities
 #endif
         SetInputDirection(_input);
 
-
-        foreach (Command command in _commands)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Input.GetKeyDown(command.Key))
-            {
-                command.GetKeyDown();
-            }
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
 
-            if (Input.GetKeyUp(command.Key))
-            {
-                command.GetKeyUp();
-            }
-
-            if (Input.GetKey(command.Key))
-            {
-                command.GetKey();
-            }
+            _player.Actions.MoveByPath(targetPos);
         }
 
+
         //DetectSwipe();
+    }
+
+    public void test()
+    { 
+        
     }
 
 

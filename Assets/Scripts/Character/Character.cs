@@ -16,7 +16,7 @@ public abstract class Character : MonoBehaviour
 
     private void Start()
     {
-        _components.NextCellPoint.parent = null;
+        _components.RealPosition.parent = null;
     }
 
     protected virtual void FixedUpdate()

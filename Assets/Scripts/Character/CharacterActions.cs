@@ -8,7 +8,7 @@ public class CharacterActions
     public CharacterActions(Character character)
     {
         _character = character;
-        _cellMovement = new CellMovement(_character.Components.RigitBody, _character.Components.NextCellPoint, _character.Stats.Speed);
+        _cellMovement = new CellMovement(_character.Components.RigitBody, _character.Components.RealPosition, _character.Stats.Speed);
     }
 
     public virtual void Move()
@@ -18,7 +18,7 @@ public class CharacterActions
         //animations
         if (_cellMovement.IsMoves)
         {
-            Vector2 targetMovePos = new Vector2(_character.Components.NextCellPoint.position.x, _character.Components.NextCellPoint.position.y);
+            Vector2 targetMovePos = new Vector2(_character.Components.RealPosition.position.x, _character.Components.RealPosition.position.y);
             Vector2 playerRBPos = new Vector2(_character.Components.RigitBody.position.x, _character.Components.RigitBody.position.y);
             PlayMoveAnimations(targetMovePos, playerRBPos);
         }
@@ -40,15 +40,15 @@ public class CharacterActions
         switch (direction)
         {
             case Direction.RIGHT:
-                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.right);
+                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.right);
             case Direction.LEFT:
-                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.left);
+                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.left);
             case Direction.UP:
-                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.up);
+                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.up);
             case Direction.DOWN:
-                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position + Vector3.down);
+                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.down);
             default:
-                return Vector2Int.CeilToInt(_character.Components.NextCellPoint.position);
+                return Vector2Int.CeilToInt(_character.Components.RealPosition.position);
 
         }
     }

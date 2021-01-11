@@ -40,7 +40,7 @@ public class EnemyActions : CharacterActions
             _waitBtwStepsTimer += Time.deltaTime;
             if ((_enemy.WaitBtwSteps >= 0f) && (_enemy.WaitBtwSteps <= _waitBtwStepsTimer))
             {
-                _enemy.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
+                _enemy.Components.RealPosition.position = _gridMovement.GetNextPoint();
                 _waitBtwStepsTimer = 0f;
             }
         }

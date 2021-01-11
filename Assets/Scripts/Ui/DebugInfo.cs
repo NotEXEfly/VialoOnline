@@ -13,7 +13,7 @@ public class DebugInfo : MonoBehaviour
     void Start()
     {
         _text = GetComponent<Text>();
-        _movePoint = player.Components.NextCellPoint;
+        _movePoint = player.Components.RealPosition;
     }
 
     // Update is called once per frame

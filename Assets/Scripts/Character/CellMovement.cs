@@ -27,7 +27,10 @@ public class CellMovement
             IsReadyMove = true;
         }
         else
+        {
             IsReadyMove = false;
+        }
+            
 
         if (IsMoves)
         {
