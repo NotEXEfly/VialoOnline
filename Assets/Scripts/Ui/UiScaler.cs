@@ -1,21 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class UiScaler : MonoBehaviour
 {
-    [SerializeField] private Canvas _gameCanvas;
+    [SerializeField] private RectTransform _gameCanvas;
+    [SerializeField] private RectTransform _mainCanvas;
+    private RectTransform _current;
 
-    private RectTransform _canvasRectTransform;
-    private RectTransform _rectTransform;
 
-    private void Awake()
+    private void Start()
     {
-        _canvasRectTransform = _gameCanvas.GetComponent<RectTransform>();
-        _rectTransform = GetComponent<RectTransform>();
+        _current = GetComponent<RectTransform>();
 
-        Vector2 newSize = new Vector2(_rectTransform.sizeDelta.x, _canvasRectTransform.sizeDelta.y);
-        _rectTransform.sizeDelta = newSize;
+        UpdateDownUiHeigth();
     }
 
+    public void UpdateDownUiHeigth()
+    {
+        float newHeight = _mainCanvas.rect.height / 2;
+        Vector2 newSize = new Vector2(_current.sizeDelta.x, newHeight);
+        _current.sizeDelta = newSize;
+    }
 }

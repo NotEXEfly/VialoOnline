@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerActions : CharacterActions
 {
     private Player _player;
     private PlayerGridMovement _gridMovement;
+
+    public PlayerGridMovement GridMovement { get => _gridMovement; }
 
     public PlayerActions(Player player) : base (player) 
     {
@@ -40,9 +40,7 @@ public class PlayerActions : CharacterActions
 
     public override void Attack()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
-        _gridMovement.SetNewPath(targetPos);
+        
     }
 
     public override void MoveByPath(Vector2Int targetCell)

@@ -6,6 +6,9 @@ public class PlayerGridMovement : BaseGridMovement
 {
     private int _lastViewTileHash;
 
+    //TODO
+    public delegate void DescriptionEventHandler(string description);
+    public event DescriptionEventHandler OnShowTileName;
     public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps)
     {
 
@@ -21,6 +24,7 @@ public class PlayerGridMovement : BaseGridMovement
         {
             if (_lastViewTileHash != tile.GetHashCode())
             {
+                OnShowTileName?.Invoke(tile.Description);
                 // ui event
                 Debug.Log(tile.Description);
             }
