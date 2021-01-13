@@ -4,6 +4,7 @@ using UnityEngine;
 public class PathFinder
 {
 	private const int MAX_SEEKS = 1000;
+	private const int MAX_STEPS = 20;
 
 	public List<PathFindingNode> foundNodes = new List<PathFindingNode>();
 	public List<PathFindingNode> unexploredNodes = new List<PathFindingNode>();
@@ -38,15 +39,31 @@ public class PathFinder
 	{
 		List<PathFindingNode> path = new List<PathFindingNode>();
 
+		bool targetWalkable = grid.IsWalkable(destinationX, destinationY);
+		PathFindingNode initalDestinationNode = new PathFindingNode(destinationX, destinationY);
+
 		if (currentNode == null || grid == null)
 		{
 			return path;
 		}
 
-		if (!grid.IsWalkable(destinationX, destinationY))
+		if (!targetWalkable)
 		{
 			Debug.Log($"{destinationX} {destinationY} not walkable");
-			return path;
+			List<PathFindingNode> neighbours = GetNeighbours(new PathFindingNode(destinationX, destinationY));
+			bool topIsWalkable = grid.IsWalkable(neighbours[0].x, neighbours[0].y);
+			bool rightIsWalkable = grid.IsWalkable(neighbours[1].x, neighbours[1].y);
+			bool bottomIsWalkable = grid.IsWalkable(neighbours[2].x, neighbours[2].y);
+			bool leftIsWalkable = grid.IsWalkable(neighbours[3].x, neighbours[3].y);
+
+			if (topIsWalkable || rightIsWalkable || bottomIsWalkable || leftIsWalkable)
+			{
+				Debug.Log("Ok");
+			}
+			else
+			{
+				return path;
+			} 
 		}
 
 		if (currentNode.x == destinationX && currentNode.y == destinationY)
@@ -65,6 +82,14 @@ public class PathFinder
 
 				while (n != null)
 				{
+					if (path.Count > MAX_STEPS)
+					{
+						path.Clear();
+						return path;
+					}
+
+
+					Debug.Log("INSIDE WHILE");
 					path.Add(n);
 					n = n.parent;
 				}
@@ -78,7 +103,7 @@ public class PathFinder
 
 			SeekNext();
 		}
-
+		
 		return path;
 	}
 
@@ -92,7 +117,7 @@ public class PathFinder
 		foreach (PathFindingNode neighbour in neighbours)
 		{
 			// Not walkable, not interesting
-			if (!grid.IsWalkable(neighbour.x, neighbour.y))
+			if (!grid.IsWalkable(neighbour.x, neighbour.y) && !(currentNode.x == destinationX && currentNode.y == destinationY))
 			{
 				continue;
 			}

@@ -20,28 +20,12 @@ public class PlayerUtilities
         // movement joystick
 #if UNITY_EDITOR
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        _input = _joystick.Direction;
 #else
         _input = _joystick.Direction;
 #endif
         SetInputDirection(_input);
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
-
-            _player.Actions.MoveByPath(targetPos);
-        }
-
-
-        //DetectSwipe();
     }
-
-    public void test()
-    { 
-        
-    }
-
 
     private void SetInputDirection(Vector2 input)
     {
