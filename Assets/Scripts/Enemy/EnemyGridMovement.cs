@@ -9,16 +9,6 @@ public class EnemyGridMovement : BaseGridMovement
         //CreateStaticPath();
     }
 
-    public override void SetNextPoint(Vector2Int targetPoint)
-    {
-        EnvironmentTile tile = GetSolidTile(targetPoint);
-        if (tile == null)
-        {
-            CurrentPath.Clear();
-            CurrentPath.Enqueue(targetPoint);
-        }
-    }
-
     public void CreateStaticPath()
     {
         CurrentPath.Enqueue(new Vector2Int(8, 0));

@@ -28,7 +28,7 @@ public class EnemyActions : CharacterActions
         {
             Direction randDirection = (Direction)_rnd.Next(0, 4);
 
-             _gridMovement.SetNextPoint(GetPointFromDirection(randDirection));
+             _gridMovement.MoveCharacterTo(randDirection);
 
             //_lastDirection = randDirection;
         }

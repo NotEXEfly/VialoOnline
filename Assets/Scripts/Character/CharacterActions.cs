@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CharacterActions
+public abstract class CharacterActions
 {
     private Character _character;
     protected CellMovement _cellMovement;
@@ -35,23 +35,6 @@ public class CharacterActions
 
     public virtual void MoveByPath(Vector2Int targetCell) { }
 
-    protected Vector2Int GetPointFromDirection(Direction direction)
-    {
-        switch (direction)
-        {
-            case Direction.RIGHT:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.right);
-            case Direction.LEFT:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.left);
-            case Direction.UP:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.up);
-            case Direction.DOWN:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.down);
-            default:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position);
-
-        }
-    }
     // ------------------------ ANIMATIONS -----------------------------
     private void PlayMoveAnimations(Vector2 targetMovePos, Vector2 playerRBPos)
     {

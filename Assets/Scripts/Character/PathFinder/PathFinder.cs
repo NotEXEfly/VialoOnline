@@ -39,34 +39,14 @@ public class PathFinder
 	{
 		List<PathFindingNode> path = new List<PathFindingNode>();
 
-		bool targetWalkable = grid.IsWalkable(destinationX, destinationY);
-		PathFindingNode initalDestinationNode = new PathFindingNode(destinationX, destinationY);
+		
 
 		if (currentNode == null || grid == null)
 		{
 			return path;
 		}
 
-		if (!targetWalkable)
-		{
-			Debug.Log($"{destinationX} {destinationY} not walkable");
-			List<PathFindingNode> neighbours = GetNeighbours(new PathFindingNode(destinationX, destinationY));
-			bool topIsWalkable = grid.IsWalkable(neighbours[0].x, neighbours[0].y);
-			bool rightIsWalkable = grid.IsWalkable(neighbours[1].x, neighbours[1].y);
-			bool bottomIsWalkable = grid.IsWalkable(neighbours[2].x, neighbours[2].y);
-			bool leftIsWalkable = grid.IsWalkable(neighbours[3].x, neighbours[3].y);
-
-			if (topIsWalkable || rightIsWalkable || bottomIsWalkable || leftIsWalkable)
-			{
-				Debug.Log("Ok");
-			}
-			else
-			{
-				return path;
-			} 
-		}
-
-		if (currentNode.x == destinationX && currentNode.y == destinationY)
+        if (currentNode.x == destinationX && currentNode.y == destinationY)
 		{
 			return path;
 		}
@@ -117,9 +97,9 @@ public class PathFinder
 		foreach (PathFindingNode neighbour in neighbours)
 		{
 			// Not walkable, not interesting
-			if (!grid.IsWalkable(neighbour.x, neighbour.y) && !(currentNode.x == destinationX && currentNode.y == destinationY))
+			if (!grid.IsWalkable(neighbour.x, neighbour.y))
 			{
-				continue;
+				continue;	
 			}
 
 			int deltaX = Mathf.Abs(neighbour.x - destinationX);

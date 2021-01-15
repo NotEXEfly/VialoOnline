@@ -5,8 +5,10 @@ public class Player : Character
     [SerializeField] private Joystick _joystick;
 
     private PlayerUtilities _utilities;
+    private PlayerActions _actions;
     public PlayerUtilities Utilities { get => _utilities; }
-    
+    public PlayerActions Actions { get => _actions; }
+
 
     private void Start()
     {
@@ -34,5 +36,10 @@ public class Player : Character
     private void Update()
     {
         _utilities.HandleInput();
+    }
+
+    private void FixedUpdate()
+    {
+        _actions.Move();
     }
 }

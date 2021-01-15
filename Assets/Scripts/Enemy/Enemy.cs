@@ -8,6 +8,8 @@ public class Enemy : Character
     [SerializeField] private float _waitBtwSteps = 1;
     public float WaitBtwSteps { get => _waitBtwSteps; }
 
+    private EnemyActions _actions;
+
     private void Start()
     {
         _actions = new EnemyActions(this);
@@ -32,4 +34,8 @@ public class Enemy : Character
 
     }
 
+    private void FixedUpdate()
+    {
+        _actions.Move();
+    }
 }

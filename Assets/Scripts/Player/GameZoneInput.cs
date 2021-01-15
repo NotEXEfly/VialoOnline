@@ -11,7 +11,6 @@ public class GameZoneInput : MonoBehaviour, IPointerClickHandler, IPointerDownHa
     [SerializeField] private GameObject _targetCursorPrefab; 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("ClickZOne");
         Vector3 mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
 
@@ -23,12 +22,12 @@ public class GameZoneInput : MonoBehaviour, IPointerClickHandler, IPointerDownHa
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("OnPointerUp");
+       
     }
 
     private IEnumerator SetTargetCursor(Vector3 targetPos)
