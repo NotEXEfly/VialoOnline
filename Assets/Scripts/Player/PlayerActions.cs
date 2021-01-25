@@ -43,12 +43,12 @@ public class PlayerActions : CharacterActions
         if (targetWalkable)
         {
             var newPath = GridMovement.BuildPath(targetCell);
-            GridMovement.SetNewPath(newPath);
+            GridMovement.SetNewPath(newPath);   
         }
         else
         {
-            var newPath = GridMovement.BuildPath(targetCell, true);
-            GridMovement.SetNewPath(newPath);
+            //var newPath = GridMovement.BuildPath(targetCell, true);
+            //GridMovement.SetNewPath(newPath);
 
             //var neighbours = _gridMovement.PathFinder.GetNeighbours(new PathFindingNode(targetCell.x, targetCell.y));
             //foreach (var neighbour in neighbours)

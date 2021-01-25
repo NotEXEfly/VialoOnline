@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,5 +18,12 @@ public class Notification : MonoBehaviour
     public void SendNotification(string str)
     {
         _text.text = str;
+        //StartCoroutine(ShowUiNotification());
+    }
+
+    private IEnumerator ShowUiNotification()
+    {
+        
+        yield return new WaitForSeconds(2);
     }
 }
