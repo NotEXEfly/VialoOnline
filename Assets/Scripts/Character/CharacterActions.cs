@@ -2,8 +2,10 @@
 
 public abstract class CharacterActions
 {
+    public CellMovement CellMovement => _cellMovement;
+
     private Character _character;
-    protected CellMovement _cellMovement;
+    private CellMovement _cellMovement;
 
     public CharacterActions(Character character)
     {
@@ -11,12 +13,11 @@ public abstract class CharacterActions
         _cellMovement = new CellMovement(_character.Components.RigitBody, _character.Components.RealPosition, _character.Stats.Speed);
     }
 
-    public virtual void Move()
+    public void Move()
     {
-        _cellMovement.MoveToNextCell();
-
+        CellMovement.MoveToNextCell();
         //animations
-        if (_cellMovement.IsMoves)
+        if (CellMovement.IsMoves)
         {
             Vector2 targetMovePos = new Vector2(_character.Components.RealPosition.position.x, _character.Components.RealPosition.position.y);
             Vector2 playerRBPos = new Vector2(_character.Components.RigitBody.position.x, _character.Components.RigitBody.position.y);
@@ -26,11 +27,6 @@ public abstract class CharacterActions
         {
             PlayIdleAnimations(_character.Stats.ViewDirection);
         }
-    }
-
-    public virtual void Attack()
-    {
-        // _character.Components.Animator.TryPlayAnimation("Attack");
     }
 
     public virtual void MoveByPath(Vector2Int targetCell) { }
@@ -64,7 +60,7 @@ public abstract class CharacterActions
 
     }
 
-    protected void PlayIdleAnimations(Direction lastViewDirection)
+    private void PlayIdleAnimations(Direction lastViewDirection)
     {
         switch (lastViewDirection)
         {

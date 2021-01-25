@@ -37,5 +37,6 @@ public class Enemy : Character
     private void FixedUpdate()
     {
         _actions.Move();
+        _actions.SelectCellPoint();
     }
 }

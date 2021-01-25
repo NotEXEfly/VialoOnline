@@ -27,12 +27,12 @@ public abstract class BaseGridMovement
         return CurrentPath.Dequeue();
     }
 
-    public Queue<Vector2Int> BuildPath(Vector2Int targetCellPoint)
+    public Queue<Vector2Int> BuildPath(Vector2Int targetCellPoint, bool targetIsWall = false)
     {
         Queue<Vector2Int> newPath = new Queue<Vector2Int>();
         var playerRoundPoint = new Vector2Int(Mathf.RoundToInt(_character.Components.RealPosition.position.x), Mathf.RoundToInt(_character.Components.RealPosition.position.y));
 
-        _pathFinder.Set(_tilemapGrid, playerRoundPoint.x, playerRoundPoint.y, targetCellPoint.x, targetCellPoint.y);
+        _pathFinder.Set(_tilemapGrid, playerRoundPoint.x, playerRoundPoint.y, targetCellPoint.x, targetCellPoint.y, targetIsWall);
         path = _pathFinder.Seek();
 
         foreach (PathFindingNode item in path)

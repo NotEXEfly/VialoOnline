@@ -41,5 +41,6 @@ public class Player : Character
     private void FixedUpdate()
     {
         _actions.Move();
+        _actions.SelectCellPoint();
     }
 }

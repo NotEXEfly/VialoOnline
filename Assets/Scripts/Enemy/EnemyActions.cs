@@ -16,15 +16,11 @@ public class EnemyActions : CharacterActions
        _gridMovement = new EnemyGridMovement(_enemy, _enemy.Components.ObstacleTilemaps);
     }
 
-    
-
-    public override void Move()
+ 
+    public void SelectCellPoint()
     {
-        //btw cell movemet
-        base.Move();
-
         // grid movement
-        if (_cellMovement.IsReadyMove)
+        if (CellMovement.IsReadyMove)
         {
             Direction randDirection = (Direction)_rnd.Next(0, 4);
 
@@ -33,7 +29,7 @@ public class EnemyActions : CharacterActions
             //_lastDirection = randDirection;
         }
 
-        if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
+        if (CellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
         {
             //_enemy.Components.NextCellPoint.position = _gridMovement.GetNextPoint();
 

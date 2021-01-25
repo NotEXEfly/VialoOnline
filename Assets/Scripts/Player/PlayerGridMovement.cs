@@ -1,28 +1,34 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class PlayerGridMovement : BaseGridMovement
 {
-    private int _lastViewTileHash;
-
-    //todo
     public delegate void NotificationHandler(string description);
     public event NotificationHandler OnWallCollision;
 
-    public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps)
-    {
+    private int _lastViewTileHash;
 
-    }
+    public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps) {}
 
-    public override Vector2 GetNextPoint()
+    public void SetNextPoint()
     {
-        if (CurrentPath.Count == 1)
+        if (CurrentPath.Count <= 0) return;
+
+        Vector2Int nextPoint = CurrentPath.Peek();
+
+        if (CurrentPath.Count == 1 && !TilemapGrid.IsWalkable(nextPoint.x, nextPoint.y))
         {
-            InvokeCollisionNotification(CurrentPath.Peek());
+            InvokeCollisionNotification(nextPoint);
+            CurrentPath.Dequeue();
+            return;
         }
-
-        return CurrentPath.Dequeue();
+        else
+        {
+            _character.Components.RealPosition.position = new Vector3(nextPoint.x, nextPoint.y, 0);
+            CurrentPath.Dequeue();
+        }  
     }
 
     public override void MoveCharacterTo(Direction targetDirection)
@@ -33,9 +39,9 @@ public class PlayerGridMovement : BaseGridMovement
         InvokeCollisionNotification(targetPoint);
     }
 
-    private void InvokeCollisionNotification(Vector2Int tagetCell)
+    private void InvokeCollisionNotification(Vector2Int targetPoint)
     {
-        EnvironmentTile tile = GetSolidTile(tagetCell);
+        EnvironmentTile tile = GetSolidTile(targetPoint);
         // ui tile preview name
         if (tile != null)
         {
@@ -53,4 +59,5 @@ public class PlayerGridMovement : BaseGridMovement
         }
     }
 
+    
 }

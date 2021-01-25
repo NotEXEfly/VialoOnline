@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerActions : CharacterActions
 {
@@ -13,73 +14,88 @@ public class PlayerActions : CharacterActions
         _gridMovement = new PlayerGridMovement(_player, _player.Components.ObstacleTilemaps);
     }
 
-    public override void Move()
+    public void SelectCellPoint()
     {
-        //btw cell movemet
-        base.Move();
-
         // idle animation direction on stay
-        if (_cellMovement.IsReadyMove && _player.Utilities.InputDirection != Direction.NONE)
+        if (CellMovement.IsReadyMove && _player.Utilities.InputDirection != Direction.NONE)
             _player.Stats.ViewDirection = _player.Utilities.InputDirection;
 
         // wasd/joystick movement
-        if (_cellMovement.IsReadyMove)
+        if (CellMovement.IsReadyMove)
         {
             if (_player.Utilities.InputDirection != Direction.NONE)
             {
-                _gridMovement.MoveCharacterTo(_player.Utilities.InputDirection);
+                GridMovement.MoveCharacterTo(_player.Utilities.InputDirection);
             }
         }
 
         // move to next point from list
-        if (_cellMovement.IsReadyMove && _gridMovement.CurrentPath.Count != 0)
+        if (CellMovement.IsReadyMove)
         {
-            _player.Components.RealPosition.position = _gridMovement.GetNextPoint();
+            GridMovement.SetNextPoint();
         }
-    }
-
-    public override void Attack()
-    {
-        
     }
 
     public override void MoveByPath(Vector2Int targetCell)
     {
-        bool targetWalkable = _gridMovement.TilemapGrid.IsWalkable(targetCell.x, targetCell.y);
+        bool targetWalkable = GridMovement.TilemapGrid.IsWalkable(targetCell.x, targetCell.y);
 
         if (targetWalkable)
         {
-            var newPath = _gridMovement.BuildPath(targetCell);
-            _gridMovement.SetNewPath(newPath);
+            var newPath = GridMovement.BuildPath(targetCell);
+            GridMovement.SetNewPath(newPath);
         }
         else
         {
+            var newPath = GridMovement.BuildPath(targetCell, true);
+            GridMovement.SetNewPath(newPath);
 
-            
-        }
-        //if (!targetWalkable)
-        //{
-            //var neighbours = GetNeighbours(new PathFindingNode(destinationX, destinationY));
-            //bool topIsWalkable = grid.IsWalkable(neighbours[0].x, neighbours[0].y);
-            //bool rightIsWalkable = grid.IsWalkable(neighbours[1].x, neighbours[1].y);
-            //bool bottomIsWalkable = grid.IsWalkable(neighbours[2].x, neighbours[2].y);
-            //bool leftIsWalkable = grid.IsWalkable(neighbours[3].x, neighbours[3].y);
+            //var neighbours = _gridMovement.PathFinder.GetNeighbours(new PathFindingNode(targetCell.x, targetCell.y));
             //foreach (var neighbour in neighbours)
             //{
             //    if (_gridMovement.TilemapGrid.IsWalkable(neighbour.x, neighbour.y))
             //    {
-            //        targetCell.x = neighbour.x;
-            //        targetCell.y = neighbour.y;
+            //        var newPath = _gridMovement.BuildPath(new Vector2Int(neighbour.x, neighbour.y));
+
+            //        if (newPath.Count != 0)
+            //        {
+            //            _gridMovement.SetNewPath(newPath);
+
+            //            List<Vector2Int> list = new List<Vector2Int>();
+            //            list.AddRange(_gridMovement.CurrentPath);
+            //            var lastPoint = list[list.Count - 1];
+            //            Debug.Log(lastPoint - targetCell);
+
+            //            _gridMovement.CurrentPath.Enqueue(targetCell);
+
+            //            break;
+            //        }
+
             //        break;
             //    }
             //    else
             //    {
-                    
+
             //    }
             //}
+        }
+        //Direction lastDirection(Vector2Int prevPoint, Vector2Int lastPoint)
+        //{
+        //    Vector2Int difference = lastPoint - prevPoint;
+        //    if (difference.x == 0)
+        //    {
+        //        if (difference.y == 1)
+        //            return Direction.DOWN;
+        //        else
+        //            return Direction.UP;
+        //    }
+        //    else
+        //    {
+        //        if (difference.y == 1)
+        //        { 
+                    
+        //        }
+        //    }
         //}
-
-        
-        
     }
 }
