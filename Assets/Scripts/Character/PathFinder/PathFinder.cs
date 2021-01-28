@@ -22,13 +22,12 @@ public class PathFinder
     /// <param name="destinationY">Destination y-coord</param>
     /// <param name="startX">Start x-coord</param>
     /// <param name="startY">Start y-coord</param>
-    public void Set(IPathFindingGrid grid, int startX, int startY, int destinationX, int destinationY, bool destinationIsWall = false)
+    public void Set(IPathFindingGrid grid, int startX, int startY, int destinationX, int destinationY)
 	{
 		this.grid = grid;
 		this.destinationX = destinationX;
 		this.destinationY = destinationY;
 		this.currentNode = new PathFindingNode(startX, startY);
-		this.destinationIsWall = destinationIsWall;
 		this.foundNodes.Clear();
 		this.unexploredNodes.Clear();
 	}
@@ -93,7 +92,7 @@ public class PathFinder
 		foreach (PathFindingNode neighbour in neighbours)
 		{
 			// Not walkable, not interesting
-			if (!grid.IsWalkable(neighbour.x, neighbour.y))
+			if (!grid.IsWalkable(neighbour.x, neighbour.y) && !(neighbour.x == destinationX && neighbour.y == destinationY))
 			{
 				continue;
 			}
