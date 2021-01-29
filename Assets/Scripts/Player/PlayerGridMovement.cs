@@ -9,8 +9,12 @@ public class PlayerGridMovement : BaseGridMovement
     public event NotificationHandler OnWallCollision;
 
     private int _lastViewTileHash;
+    private Player _player;
 
-    public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps) {}
+    public PlayerGridMovement(Character character, List<Tilemap> obstacleTilemaps) : base (character, obstacleTilemaps) 
+    {
+        _player = character as Player;
+    }
 
     public void SetNextPoint()
     {
@@ -20,6 +24,8 @@ public class PlayerGridMovement : BaseGridMovement
 
         if (CurrentPath.Count == 1 && !TilemapGrid.IsWalkable(nextPoint.x, nextPoint.y))
         {
+            _player.Stats.ViewDirection = MoveDirection.FromNextPoint(new Vector2(nextPoint.x, nextPoint.y), _player);
+
             InvokeCollisionNotification(nextPoint);
             CurrentPath.Dequeue();
             return;
@@ -35,7 +41,7 @@ public class PlayerGridMovement : BaseGridMovement
     {
         base.MoveCharacterTo(targetDirection);
 
-        var targetPoint = GetPointFromDirection(targetDirection);
+        var targetPoint = MoveDirection.GetPoint(targetDirection, _player);
         InvokeCollisionNotification(targetPoint);
     }
 

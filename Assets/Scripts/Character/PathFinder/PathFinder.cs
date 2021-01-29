@@ -40,12 +40,16 @@ public class PathFinder
 	{
 		List<PathFindingNode> path = new List<PathFindingNode>();
 
-		
+
 		if (currentNode == null || grid == null)
 		{
 			return path;
 		}
 		else if (currentNode.x == destinationX && currentNode.y == destinationY)
+		{
+			return path;
+		}
+		else if (!grid.IsWalkable(destinationX, destinationY) && !TargetIsOpen(GetNeighbours(new PathFindingNode(destinationX, destinationY))))
 		{
 			return path;
 		}
@@ -156,6 +160,20 @@ public class PathFinder
 		};
 
 		return n;
+	}
+
+	private bool TargetIsOpen(List<PathFindingNode> neighbours)
+	{
+		bool status = false;
+        foreach (var neighbour in neighbours)
+        {
+			if (grid.IsWalkable(neighbour.x, neighbour.y))
+			{
+				status = true;
+				break;
+			}
+		}
+		return status;
 	}
 }
 

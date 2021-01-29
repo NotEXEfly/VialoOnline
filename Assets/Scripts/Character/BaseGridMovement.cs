@@ -53,7 +53,7 @@ public abstract class BaseGridMovement
 
     public virtual void MoveCharacterTo(Direction targetDirection)
     {
-        var targetPoint = GetPointFromDirection(targetDirection);
+        var targetPoint = MoveDirection.GetPoint(targetDirection, _character);
         var tile = GetSolidTile(targetPoint);
 
         if (tile == null)
@@ -75,22 +75,5 @@ public abstract class BaseGridMovement
         }
 
         return null;
-    }
-
-    public Vector2Int GetPointFromDirection(Direction direction)
-    {
-        switch (direction)
-        {
-            case Direction.RIGHT:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.right);
-            case Direction.LEFT:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.left);
-            case Direction.UP:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.up);
-            case Direction.DOWN:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position + Vector3.down);
-            default:
-                return Vector2Int.CeilToInt(_character.Components.RealPosition.position);
-        }
     }
 }
