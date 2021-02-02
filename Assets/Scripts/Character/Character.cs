@@ -10,8 +10,4 @@ public abstract class Character : MonoBehaviour
     public CharacterComponents Components { get => _components; }
     public CharacterStats Stats { get => _stats; }
 
-    private void Start()
-    {
-        _components.RealPosition.parent = null;
-    }
 }

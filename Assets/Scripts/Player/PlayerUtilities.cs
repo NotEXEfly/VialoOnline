@@ -20,7 +20,7 @@ public class PlayerUtilities
         // movement joystick
 #if UNITY_EDITOR
         _input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        _input = _joystick.Direction;
+        //_input = _joystick.Direction;
 #else
         _input = _joystick.Direction;
 #endif

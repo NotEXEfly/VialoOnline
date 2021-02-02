@@ -49,7 +49,7 @@ public class PathFinder
 		{
 			return path;
 		}
-		else if (!grid.IsWalkable(destinationX, destinationY) && !TargetIsOpen(GetNeighbours(new PathFindingNode(destinationX, destinationY))))
+		else if (!grid.IsWalkable(destinationX, destinationY) && !TargetIsOpen(new PathFindingNode(destinationX, destinationY)))
 		{
 			return path;
 		}
@@ -90,7 +90,6 @@ public class PathFinder
 	/// </summary>
 	private void SeekNext()
 	{
-		Debug.Log("---TYT---");
 		var neighbours = GetNeighbours(currentNode);
 
 		foreach (PathFindingNode neighbour in neighbours)
@@ -162,8 +161,9 @@ public class PathFinder
 		return n;
 	}
 
-	private bool TargetIsOpen(List<PathFindingNode> neighbours)
+	private bool TargetIsOpen(PathFindingNode destination)
 	{
+		var neighbours = GetNeighbours(destination);
 		bool status = false;
         foreach (var neighbour in neighbours)
         {

@@ -33,6 +33,8 @@ public class AnyStateAnimator : MonoBehaviour
 
     public void TryPlayAnimation(string newAnimation)
     {
+        //if(!_animations.ContainsKey(newAnimation)) return;
+
         switch (_animations[newAnimation].AnimationRig)
         {
             case RIG.BODY:
