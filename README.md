@@ -19,3 +19,6 @@ TopDown ММОRPG для мобильных платформ, геймплейн
   - система инвентаря;
   - начать писать сервер;
   - присвоить игроку сетевые параметры(level, nickname, exp...);
+  
+  
+  ![Alt-текст](https://github.com/NotEXEfly/VialoOnline/blob/main/Assets/Sprites/screen.png "Орк")
