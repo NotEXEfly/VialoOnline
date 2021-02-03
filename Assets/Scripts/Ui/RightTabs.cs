@@ -33,7 +33,7 @@ public class RightTabs : MonoBehaviour
         }
     }
 
-    private void CloseAllWindows()
+    public void CloseAllWindows()
     {
         foreach (var tab in _windows)
         {

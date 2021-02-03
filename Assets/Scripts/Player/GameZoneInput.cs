@@ -5,10 +5,18 @@ using UnityEngine.EventSystems;
 public class GameZoneInput : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private Player _player;
+    [SerializeField] private GameObject _targetCursorPrefab;
+    [SerializeField] private RightTabs _rightTabs;
 
-    [SerializeField] private GameObject _targetCursorPrefab; 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (RightTabs.WindowIsOpen)
+        {
+            _rightTabs.CloseAllWindows();
+            return;
+        }
+        
+
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2Int targetPos = new Vector2Int(Mathf.RoundToInt(mousePos.x), Mathf.RoundToInt(mousePos.y));
 
